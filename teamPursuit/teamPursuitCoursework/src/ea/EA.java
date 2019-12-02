@@ -56,9 +56,9 @@ public class EA<Invidiual> implements Runnable{
 			Individual parent2 = rouletteWheelSelection();
 			//Individual parent1 = tournamentSelection();
 			//Individual parent2 = tournamentSelection();
-			//Individual child = crossover(parent1, parent2); 
+		  //Individual child = crossover(parent1, parent2); 
 			//Individual child = two_pt_crossover(parent1, parent2);
-		    Individual child = uniform_corssover(parent1, parent2);
+		  Individual child = uniform_corssover(parent1, parent2);
 			child = hillClimber(child);
 			child = mutate(child);
 			child.evaluate(teamPursuit);
@@ -85,12 +85,11 @@ public class EA<Invidiual> implements Runnable{
 	}
 	
 	private Individual mutate(Individual child){
-		child = orginalMutate(child);
+		child = creepMutate(child);
 		child = shuffleMutate(child);
 		child = scrambleMutate(child);
 		return child;
 	}
-
 
 
 	private void replace(Individual child) {
@@ -121,7 +120,7 @@ public class EA<Invidiual> implements Runnable{
 	}
 
 
-	private Individual orginalMutate(Individual child) {
+	private Individual creepMutate(Individual child) {
 		
 		// choose how many elements to alter
 		int mutationRate = 1 + Parameters.rnd.nextInt(Parameters.mutationRateMax);
@@ -168,7 +167,7 @@ public class EA<Invidiual> implements Runnable{
 	}
 	
 	private void sawTooth(){
-		if(iteration % 40 == 0){
+		if(iteration % 100 == 0){
 			if(population.size() >= 10){
 				Individual worst = getWorst(population);
 				population.remove(worst);
@@ -366,12 +365,13 @@ public class EA<Invidiual> implements Runnable{
 	private Individual hillClimber(Individual child){
 		try{
 	        double oldFitness = child.getFitness();
-	        mutate(child);
+	        child = creepMutate(child);
 	        double newFitness = child.getFitness();
 	
 	        while (newFitness < oldFitness)
 	        {
-	            mutate(child);
+	        	child = creepMutate(child);
+	        	newFitness = child.getFitness();
 	        }
 		}catch(NullPointerException npe){
 			

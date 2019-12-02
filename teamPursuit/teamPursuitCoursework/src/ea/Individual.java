@@ -26,8 +26,8 @@ public class Individual {
 		}
 		
 		for(int i = 0; i < pacingStrategy.length; i++){
-			pacingStrategy[i] = Parameters.DEFAULT_WOMENS_PACING_STRATEGY[i];
-			//pacingStrategy[i] = ThreadLocalRandom.current().nextInt(300, 500);
+			//pacingStrategy[i] = Parameters.DEFAULT_WOMENS_PACING_STRATEGY[i];
+			pacingStrategy[i] = ThreadLocalRandom.current().nextInt(300, 500);
 		}
 		
 	}
